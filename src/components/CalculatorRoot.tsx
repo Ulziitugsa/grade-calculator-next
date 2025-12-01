@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import GradeSystemSelector from "./GradeSystemSelector";
 import AssessmentTable from "./AssessmentTable";
@@ -19,6 +19,8 @@ import {
   getTotalWeight,
 } from "../gradeUtils";
 
+import { usePersistentState } from "../usePersistentState";
+
 type Props = {
   initialSystem?: GradeSystemId;
 };
@@ -30,26 +32,52 @@ const DEFAULT_ASSESSMENTS: Assessment[] = [
 ];
 
 export default function CalculatorRoot({ initialSystem = "au_uni" }: Props) {
-  const [systemId, setSystemId] = useState<GradeSystemId>(initialSystem);
-  const [assessments, setAssessments] =
-    useState<Assessment[]>(DEFAULT_ASSESSMENTS);
+  const [systemId, setSystemId] = usePersistentState<GradeSystemId>(
+    "ggc:systemId",
+    initialSystem
+  );
 
-  const [targetFinalPercent, setTargetFinalPercent] = useState<number>(85);
+  const [assessments, setAssessments] = usePersistentState<Assessment[]>(
+    "ggc:assessments",
+    DEFAULT_ASSESSMENTS
+  );
+
+  const [targetFinalPercent, setTargetFinalPercent] =
+    usePersistentState<number>("ggc:targetFinalPercent", 85);
+
   const [targetAssessmentId, setTargetAssessmentId] =
-    useState<string>("exam");
+    usePersistentState<string>("ggc:targetAssessmentId", "exam");
 
   const system = useMemo(() => getGradeSystem(systemId), [systemId]);
 
-  const totalWeight = getTotalWeight(assessments);
-  const { currentPercent, completedWeight } =
-    calculateCurrentWeightedPercentage(assessments);
-  const finalPercent = calculateFinalPercentage(assessments);
-  const finalBand = getBandForPercentage(system, finalPercent);
+  const totalWeight = useMemo(
+    () => getTotalWeight(assessments),
+    [assessments]
+  );
 
-  const requiredScore = calculateRequiredScoreOnAssessment(
-    assessments,
-    targetAssessmentId,
-    targetFinalPercent
+  const { currentPercent, completedWeight } = useMemo(
+    () => calculateCurrentWeightedPercentage(assessments),
+    [assessments]
+  );
+
+  const finalPercent = useMemo(
+    () => calculateFinalPercentage(assessments),
+    [assessments]
+  );
+
+  const finalBand = useMemo(
+    () => getBandForPercentage(system, finalPercent),
+    [system, finalPercent]
+  );
+
+  const requiredScore = useMemo(
+    () =>
+      calculateRequiredScoreOnAssessment(
+        assessments,
+        targetAssessmentId,
+        targetFinalPercent
+      ),
+    [assessments, targetAssessmentId, targetFinalPercent]
   );
 
   useEffect(() => {
@@ -58,44 +86,42 @@ export default function CalculatorRoot({ initialSystem = "au_uni" }: Props) {
         setTargetAssessmentId(assessments[assessments.length - 1].id);
       }
     }
-  }, [assessments, targetAssessmentId]);
+  }, [assessments, targetAssessmentId, setTargetAssessmentId]);
 
   return (
-    <>
-      <div className="row g-4">
-        <div className="col-lg-7">
-          <GradeSystemSelector
-            selectedSystemId={systemId}
-            onChange={setSystemId}
-          />
+    <div className="row g-4">
+      <div className="col-lg-7">
+        <GradeSystemSelector
+          selectedSystemId={systemId}
+          onChange={setSystemId}
+        />
 
-          <AssessmentTable
-            assessments={assessments}
-            onChange={setAssessments}
-          />
-        </div>
-
-        <div className="col-lg-5">
-          <FinalGradeSummary
-            totalWeight={totalWeight}
-            completedWeight={completedWeight}
-            currentPercent={currentPercent}
-            finalPercent={finalPercent}
-            finalBand={finalBand}
-          />
-
-          <RequiredScorePanel
-            assessments={assessments}
-            targetFinalPercent={targetFinalPercent}
-            onTargetFinalPercentChange={setTargetFinalPercent}
-            targetAssessmentId={targetAssessmentId}
-            onTargetAssessmentChange={setTargetAssessmentId}
-            requiredScore={requiredScore}
-          />
-
-          {systemId === "au_uni" && <UniAuWamGpaCalculator />}
-        </div>
+        <AssessmentTable
+          assessments={assessments}
+          onChange={setAssessments}
+        />
       </div>
-    </>
+
+      <div className="col-lg-5">
+        <FinalGradeSummary
+          totalWeight={totalWeight}
+          completedWeight={completedWeight}
+          currentPercent={currentPercent}
+          finalPercent={finalPercent}
+          finalBand={finalBand}
+        />
+
+        <RequiredScorePanel
+          assessments={assessments}
+          targetFinalPercent={targetFinalPercent}
+          onTargetFinalPercentChange={setTargetFinalPercent}
+          targetAssessmentId={targetAssessmentId}
+          onTargetAssessmentChange={setTargetAssessmentId}
+          requiredScore={requiredScore}
+        />
+
+        {systemId === "au_uni" && <UniAuWamGpaCalculator />}
+      </div>
+    </div>
   );
 }

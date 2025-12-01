@@ -33,6 +33,17 @@ export default function RootLayout({
         </Script>
 
         {children}
+
+        <footer className="text-center small text-muted py-4">
+          <div>
+            <a href="/about" className="me-3">About</a>
+            <a href="/privacy-policy" className="me-3">Privacy Policy</a>
+            <a href="/terms">Terms</a>
+          </div>
+          <div className="mt-2">
+            © {new Date().getFullYear()} Global Grade Calculator
+          </div>
+        </footer>
       </body>
     </html>
   );
