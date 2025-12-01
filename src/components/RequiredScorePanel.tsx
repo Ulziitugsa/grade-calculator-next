@@ -117,7 +117,7 @@ export default function RequiredScorePanel({
   return (
     <div className="card card-highlight mb-4">
       <div className="card-body">
-        <h2 className="h5 mb-3">3. What do I need on the final?</h2>
+        <h2 className="h5 mb-3">4. What do I need on the final?</h2>
         <p className="text-muted small">
           Choose a target overall percentage and the assessment you want to
           solve for. The calculator will estimate the minimum score needed on
