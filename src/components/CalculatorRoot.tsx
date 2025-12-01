@@ -22,7 +22,7 @@ import {
 import { usePersistentState } from "../usePersistentState";
 
 type Props = {
-  initialSystem?: GradeSystemId;
+  initialSystem: GradeSystemId;
 };
 
 const DEFAULT_ASSESSMENTS: Assessment[] = [
@@ -31,11 +31,9 @@ const DEFAULT_ASSESSMENTS: Assessment[] = [
   { id: "exam", name: "Final Exam", weight: 50, score: null },
 ];
 
-export default function CalculatorRoot({ initialSystem = "au_uni" }: Props) {
-  const [systemId, setSystemId] = usePersistentState<GradeSystemId>(
-    "ggc:systemId",
-    initialSystem
-  );
+export default function CalculatorRoot({ initialSystem }: Props) {
+  // System is now fixed per page (no localStorage override)
+  const systemId: GradeSystemId = initialSystem;
 
   const [assessments, setAssessments] = usePersistentState<Assessment[]>(
     "ggc:assessments",
@@ -91,10 +89,7 @@ export default function CalculatorRoot({ initialSystem = "au_uni" }: Props) {
   return (
     <div className="row g-4">
       <div className="col-lg-7">
-        <GradeSystemSelector
-          selectedSystemId={systemId}
-          onChange={setSystemId}
-        />
+        <GradeSystemSelector selectedSystemId={systemId} />
 
         <AssessmentTable
           assessments={assessments}

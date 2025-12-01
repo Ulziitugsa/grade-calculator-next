@@ -113,7 +113,7 @@ const UniAuWamGpaCalculator: React.FC = () => {
   };
 
   return (
-    <div className="card mb-4">
+    <div className="card card-highlight mb-4">
       <div className="card-body">
         <h2 className="h5 mb-3">
           5. WAM & GPA (Australia – Uni, approx.)
@@ -126,7 +126,7 @@ const UniAuWamGpaCalculator: React.FC = () => {
         </p>
 
         <div className="table-responsive mb-3">
-          <table className="table table-sm align-middle">
+          <table className="table table-sm align-middle wam-table">
             <thead>
               <tr>
                 <th style={{ width: "15%" }}>Code</th>

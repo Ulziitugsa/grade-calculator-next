@@ -133,3 +133,13 @@ export function getBandForPercentage(
     null
   );
 }
+
+
+export const gradeSystemRoutes: Record<GradeSystemId, string> = {
+  au_uni: "/australia-university-grade-calculator",
+  us_letter: "/us-letter-grade-calculator",
+  uk_honours: "/uk-honours-degree-calculator",
+  uk_alevel: "/a-level-grade-calculator",
+  uk_gcse: "/gcse-grade-calculator",
+  ib_diploma: "/ib-grade-calculator",
+};

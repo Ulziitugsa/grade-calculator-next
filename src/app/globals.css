@@ -1,88 +1,231 @@
-/* Your global styles */
+/* ===========================
+   Core Design System
+   =========================== */
 
 :root {
-  --accent: #2563eb;          /* main accent (soft blue) */
-  --accent-soft: #eff6ff;     /* very light blue background */
-  --border-soft: #e5e7eb;
+  --ggc-bg: #f3f4f6;
+  --ggc-bg-soft: #eef2ff;
+  --ggc-card-bg: #ffffff;
+  --ggc-border: #e5e7eb;
+  --ggc-border-strong: #cbd5f5;
+
+  --ggc-accent: #6366f1;          /* Indigo */
+  --ggc-accent-soft: #eef2ff;
+  --ggc-accent-strong: #4f46e5;
+
+  --ggc-text-main: #0f172a;
+  --ggc-text-muted: #6b7280;
+
+  --ggc-shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.08);
+  --ggc-radius-card: 18px;
+  --ggc-radius-pill: 999px;
+
+  --ggc-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
-/* Light background, slight blue tint at top */
-.app-shell {
-  background: radial-gradient(circle at top, #ffffff 0, #f3f4f6 55%, #e5e7eb 100%);
-  min-height: 100vh;
+/* Global reset-ish */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* Main container */
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* ===========================
+   Body & Background
+   =========================== */
+
+body {
+  font-family: var(--ggc-font-sans);
+  color: var(--ggc-text-main);
+  background:
+    radial-gradient(circle at top, #ffffff 0, #f3f4f6 55%, #e5e7eb 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
 .app-container {
-  max-width: 1100px;
-  padding-bottom: 4rem; /* extra scroll room for dropdowns */
+  background-color: transparent;
 }
 
-/* Hero area */
+/* Soft vignette around entire viewport */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 100% at center,
+      rgba(0,0,0,0.06) 0%,
+      rgba(0,0,0,0.02) 55%,
+      rgba(0,0,0,0) 85%
+    );
+  z-index: -1;
+}
+
+/* Global link style */
+a {
+  color: var(--ggc-accent);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--ggc-accent-strong);
+  text-decoration: underline;
+}
+
+/* ===========================
+   App Layout
+   =========================== */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  max-width: 1120px;
+}
+
+/* Keep footer at bottom */
+.app-shell > .container {
+  flex: 1 0 auto;
+}
+
+/* ===========================
+   Hero Section
+   =========================== */
+
+.app-hero {
+  position: relative;
+  padding: 1rem 0 1.5rem;
+}
+
+.app-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  height: 105%;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .app-hero-title {
-  font-weight: 700;
+  font-weight: 750;
   font-size: 1.9rem;
-  letter-spacing: -0.02em;
-  color: #0f172a;
+  letter-spacing: -0.03em;
+  color: var(--ggc-text-main);
 }
 
 .app-hero-subtitle {
   max-width: 640px;
   font-size: 0.95rem;
+  color: var(--ggc-text-muted);
 }
 
-/* Cards: soft, clean */
+@media (min-width: 992px) {
+  .app-hero-title {
+    font-size: 2.25rem;
+  }
+
+  .app-hero {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* ===========================
+   Cards
+   =========================== */
+
 .card {
-  border-radius: 0.9rem;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.06);
-  overflow: visible; /* so dropdowns aren’t clipped */
+  border-radius: var(--ggc-radius-card);
+  border: 1px solid var(--ggc-border);
+  background-color: #ffffff;
+  box-shadow: var(--ggc-shadow-soft);
+  overflow: visible;
+  transition:
+    transform 0.15s ease-out,
+    box-shadow 0.15s ease-out,
+    border-color 0.15s ease-out;
 }
 
-/* "Important" cards (summary, required score) get a soft accent */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 55px rgba(15, 23, 42, 0.12);
+  border-color: var(--ggc-border-strong);
+}
+
+/* Same base colour, just a slightly stronger border */
 .card-highlight {
-  border-color: #dbeafe;
-  background: linear-gradient(135deg, #ffffff, var(--accent-soft));
+  background-color: #ffffff;
+  border-color: rgba(99, 102, 241, 0.35);
 }
 
-/* Card titles */
+/* Card title refinement */
 .card-body h2.h5 {
   font-weight: 600;
   margin-bottom: 0.75rem;
 }
 
-/* Helper text */
+/* ===========================
+   Typography helpers
+   =========================== */
+
+.text-muted {
+  color: var(--ggc-text-muted) !important;
+}
+
+.small,
 .text-muted.small,
 .small.text-muted {
   font-size: 0.84rem;
 }
 
-/* Make key numbers slightly stronger */
+/* Important numeric values */
 .fs-4,
 .fs-5 {
   font-weight: 600;
 }
 
-/* Tighter table spacing */
+/* ===========================
+   Tables & Inputs
+   =========================== */
+
 .table-sm > :not(caption) > * > * {
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
 }
 
-/* Inputs: slightly softer edges */
 .form-control,
 .form-select {
   border-radius: 0.55rem;
+  border-color: var(--ggc-border);
+  font-size: 0.9rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ggc-accent);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
 }
 
 /* Small labels */
 .form-label-sm,
 .form-label.form-label-sm {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   margin-bottom: 0.15rem;
 }
 
-/* Scrollable grade bands list */
+/* Scrollable band list */
 .bands-list {
   max-height: 180px;
   overflow-y: auto;
@@ -90,15 +233,141 @@
   margin-top: 0.35rem;
 }
 
-/* Footer */
-footer {
-  opacity: 0.85;
-  font-size: 0.85rem;
+/* ===========================
+   Buttons
+   =========================== */
+
+.btn-primary {
+  background-color: var(--ggc-accent);
+  border-color: var(--ggc-accent);
+  border-radius: 999px;
+  padding-inline: 1.2rem;
+  font-weight: 500;
 }
 
-/* Slight hero size bump on large screens */
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--ggc-accent-strong);
+  border-color: var(--ggc-accent-strong);
+}
+
+.btn-outline-primary {
+  color: var(--ggc-accent);
+  border-color: var(--ggc-accent);
+  border-radius: 999px;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--ggc-accent-soft);
+  border-color: var(--ggc-accent-strong);
+  color: var(--ggc-accent-strong);
+}
+
+/* Danger small button refinement */
+.btn-outline-danger.btn-sm {
+  border-radius: 999px;
+}
+
+/* ===========================
+   Alerts & Info Blocks
+   =========================== */
+
+.alert {
+  border-radius: 12px;
+}
+
+.alert-warning {
+  background-color: #fef9c3;
+  border-color: #facc15;
+  color: #713f12;
+}
+
+/* Required score info box */
+.required-score-box {
+  border-radius: 14px;
+  border: 1px dashed rgba(148, 163, 184, 0.9);
+  background: #f9fafb;
+}
+
+.required-score-placeholder {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--ggc-text-muted);
+  font-weight: 400;
+}
+
+.required-score-box strong {
+  font-weight: 700;
+}
+
+
+/* ===========================
+   Footer
+   =========================== */
+
+footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+footer a {
+  color: var(--ggc-text-muted);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--ggc-accent);
+  text-decoration: underline;
+}/* WAM & GPA table layout */
+.wam-table th,
+.wam-table td {
+  vertical-align: middle;
+}
+
+/* Give Code & Name more horizontal space on medium+ screens */
+@media (min-width: 768px) {
+  .wam-table th:nth-child(1),
+  .wam-table td:nth-child(1) {
+    width: 90px;          /* Code */
+  }
+
+  .wam-table th:nth-child(2),
+  .wam-table td:nth-child(2) {
+    width: 38%;           /* Name */
+  }
+
+  .wam-table th:nth-child(3),
+  .wam-table td:nth-child(3),
+  .wam-table th:nth-child(4),
+  .wam-table td:nth-child(4),
+  .wam-table th:nth-child(5),
+  .wam-table td:nth-child(5) {
+    width: 14%;
+  }
+}
+
+/* Make inputs fill their cells nicely */
+.wam-table input.form-control {
+  width: 100%;
+}
+
+
+/* ===========================
+   Layout Tweaks
+   =========================== */
+
 @media (min-width: 992px) {
-  .app-hero-title {
-    font-size: 2.1rem;
+  .app-container {
+    padding-bottom: 4rem;
+  }
+}
+
+/* Space under hero into cards on mobile */
+@media (max-width: 575.98px) {
+  .app-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

@@ -1,77 +1,88 @@
-// src/components/AssessmentTable.tsx
+"use client";
+
 import React from "react";
 import type { Assessment } from "../gradeUtils";
 
 type Props = {
   assessments: Assessment[];
-  onChange: (updated: Assessment[]) => void;
-  onTargetAssessmentChange?: (id: string) => void; // optional, used by parent
+  onChange: (assessments: Assessment[]) => void;
 };
 
-const AssessmentTable: React.FC<Props> = ({
-  assessments,
-  onChange,
-}) => {
-  const handleFieldChange = (
+function clamp(value: number, min: number, max: number) {
+  if (Number.isNaN(value)) return min;
+  return Math.min(max, Math.max(min, value));
+}
+
+export default function AssessmentTable({ assessments, onChange }: Props) {
+  const updateAssessment = (
     id: string,
     field: "name" | "weight" | "score",
     value: string
   ) => {
-    const updated = assessments.map((a) => {
-      if (a.id !== id) return a;
+    onChange(
+      assessments.map((a) => {
+        if (a.id !== id) return a;
 
-      if (field === "name") {
-        return { ...a, name: value };
-      }
+        if (field === "name") {
+          return { ...a, name: value };
+        }
 
-      if (field === "weight") {
-        const parsed = parseFloat(value);
-        return { ...a, weight: Number.isNaN(parsed) ? 0 : parsed };
-      }
+        if (field === "weight") {
+          if (value === "") {
+            return { ...a, weight: 0 };
+          }
+          const num = clamp(parseFloat(value), 0, 100);
+          return { ...a, weight: Number.isNaN(num) ? 0 : num };
+        }
 
-      if (field === "score") {
-        if (value === "") return { ...a, score: null };
-        const parsed = parseFloat(value);
-        return { ...a, score: Number.isNaN(parsed) ? null : parsed };
-      }
+        if (field === "score") {
+          if (value === "") {
+            return { ...a, score: null };
+          }
+          const num = clamp(parseFloat(value), 0, 100);
+          return { ...a, score: Number.isNaN(num) ? null : num };
+        }
 
-      return a;
-    });
-
-    onChange(updated);
+        return a;
+      })
+    );
   };
 
   const addAssessment = () => {
-    const id = `a_${Date.now()}`;
-    const updated: Assessment[] = [
+    const newId = `a_${Date.now()}`;
+    onChange([
       ...assessments,
-      { id, name: "New assessment", weight: 0, score: null },
-    ];
-    onChange(updated);
+      {
+        id: newId,
+        name: `Assessment ${assessments.length + 1}`,
+        weight: 0,
+        score: null,
+      },
+    ]);
   };
 
   const removeAssessment = (id: string) => {
-    const updated = assessments.filter((a) => a.id !== id);
-    onChange(updated);
+    if (assessments.length <= 1) return;
+    onChange(assessments.filter((a) => a.id !== id));
   };
 
   return (
-    <div className="card mb-4">
+    <div className="card  mb-4">
       <div className="card-body">
         <h2 className="h5 mb-3">2. Assessments & weights</h2>
         <p className="text-muted small">
-          Enter your assessments, their weight and scores. Leave the score blank
-          if it hasn&apos;t been graded yet.
+          Add each assignment, quiz or exam with its percentage weight. Marks
+          and weights are automatically clamped between 0 and 100.
         </p>
 
-        <div className="table-responsive mb-3">
+        <div className="table-responsive">
           <table className="table table-sm align-middle">
             <thead>
               <tr>
-                <th style={{ width: "40%" }}>Name</th>
+                <th style={{ width: "40%" }}>Assessment</th>
                 <th style={{ width: "20%" }}>Weight (%)</th>
                 <th style={{ width: "20%" }}>Score (%)</th>
-                <th style={{ width: "10%" }} />
+                <th style={{ width: "20%" }}></th>
               </tr>
             </thead>
             <tbody>
@@ -82,32 +93,32 @@ const AssessmentTable: React.FC<Props> = ({
                       className="form-control form-control-sm"
                       value={a.name}
                       onChange={(e) =>
-                        handleFieldChange(a.id, "name", e.target.value)
+                        updateAssessment(a.id, "name", e.target.value)
                       }
                     />
                   </td>
                   <td>
                     <input
-                      className="form-control form-control-sm"
                       type="number"
                       min={0}
                       max={100}
+                      className="form-control form-control-sm"
                       value={a.weight}
                       onChange={(e) =>
-                        handleFieldChange(a.id, "weight", e.target.value)
+                        updateAssessment(a.id, "weight", e.target.value)
                       }
                     />
                   </td>
                   <td>
                     <input
-                      className="form-control form-control-sm"
                       type="number"
                       min={0}
                       max={100}
+                      className="form-control form-control-sm"
                       value={a.score ?? ""}
                       placeholder="—"
                       onChange={(e) =>
-                        handleFieldChange(a.id, "score", e.target.value)
+                        updateAssessment(a.id, "score", e.target.value)
                       }
                     />
                   </td>
@@ -118,7 +129,7 @@ const AssessmentTable: React.FC<Props> = ({
                         className="btn btn-outline-danger btn-sm"
                         onClick={() => removeAssessment(a.id)}
                       >
-                        ✕
+                        Remove
                       </button>
                     )}
                   </td>
@@ -138,6 +149,4 @@ const AssessmentTable: React.FC<Props> = ({
       </div>
     </div>
   );
-};
-
-export default AssessmentTable;
+}

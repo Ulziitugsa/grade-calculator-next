@@ -1,24 +1,35 @@
-// src/components/GradeSystemSelector.tsx
-import React from "react";
-import type { GradeSystemId, GradeSystem } from "../gradeSystems";
-import { gradeSystems } from "../gradeSystems";
+"use client";
 
+import React from "react";
+import { useRouter, usePathname } from "next/navigation";
+
+import type { GradeSystemId, GradeSystem } from "../gradeSystems";
+import { gradeSystems, gradeSystemRoutes } from "../gradeSystems";
 
 type Props = {
   selectedSystemId: GradeSystemId;
-  onChange: (id: GradeSystemId) => void;
 };
 
-const GradeSystemSelector: React.FC<Props> = ({
-  selectedSystemId,
-  onChange,
-}) => {
+const GradeSystemSelector: React.FC<Props> = ({ selectedSystemId }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const selected: GradeSystem | undefined = gradeSystems.find(
     (g) => g.id === selectedSystemId
   );
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newId = e.target.value as GradeSystemId;
+    const targetRoute = gradeSystemRoutes[newId];
+
+    if (!targetRoute) return;
+    if (pathname === targetRoute) return;
+
+    router.push(targetRoute);
+  };
+
   return (
-    <div className="card mb-4">
+    <div className="card card-highlight mb-4">
       <div className="card-body">
         <h2 className="h5 mb-3">1. Select grading system</h2>
 
@@ -27,7 +38,7 @@ const GradeSystemSelector: React.FC<Props> = ({
           <select
             className="form-select"
             value={selectedSystemId}
-            onChange={(e) => onChange(e.target.value as GradeSystemId)}
+            onChange={handleChange}
           >
             {gradeSystems.map((gs) => (
               <option key={gs.id} value={gs.id}>

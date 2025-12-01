@@ -1,4 +1,5 @@
-// src/components/FinalGradeSummary.tsx
+"use client";
+
 import React from "react";
 import type { GradeBand } from "../gradeSystems";
 
@@ -10,70 +11,67 @@ type Props = {
   finalBand: GradeBand | null;
 };
 
-const FinalGradeSummary: React.FC<Props> = ({
+export default function FinalGradeSummary({
   totalWeight,
   completedWeight,
   currentPercent,
   finalPercent,
   finalBand,
-}) => {
+}: Props) {
+  const weightIs100 = Math.round(totalWeight) === 100;
+
   return (
     <div className="card card-highlight mb-4">
       <div className="card-body">
-        <h2 className="h5 mb-3">3. Grade summary</h2>
+        <h2 className="h5 mb-3">3. Current and final grade</h2>
 
-        <div className="row mb-3">
-          <div className="col-md-4 mb-2">
-            <div className="small text-muted">Total weight</div>
-            <div className="fw-semibold">
-              {totalWeight.toFixed(1)}%
-              {Math.abs(totalWeight - 100) > 0.1 && (
-                <span className="text-warning ms-2 small">
-                  (usually 100%)
-                </span>
-              )}
-            </div>
+        {!weightIs100 && (
+          <div className="alert alert-warning py-2 small mb-3">
+            <strong>Note:</strong> Your assessment weights add up to{" "}
+            <strong>{totalWeight.toFixed(1)}%</strong>. Most courses expect
+            a total of 100%. Check that you’ve entered the correct weights.
           </div>
+        )}
 
-          <div className="col-md-4 mb-2">
-            <div className="small text-muted">Completed weight</div>
-            <div className="fw-semibold">
+        <div className="row mb-2">
+          <div className="col-6">
+            <div className="text-muted small">Completed weight</div>
+            <div className="fs-6 fw-semibold">
               {completedWeight.toFixed(1)}%
             </div>
           </div>
-
-          <div className="col-md-4 mb-2">
-            <div className="small text-muted">Current average</div>
-            <div className="fw-semibold">
-              {completedWeight > 0 ? `${currentPercent.toFixed(2)}%` : "—"}
-              <span className="text-muted small ms-1">
-                (based on completed work)
-              </span>
-            </div>
+          <div className="col-6 text-end">
+            <div className="text-muted small">Total weight</div>
+            <div className="fs-6 fw-semibold">{totalWeight.toFixed(1)}%</div>
           </div>
         </div>
 
-        <hr />
+        <hr className="my-2" />
 
         <div className="row">
-          <div className="col-md-6 mb-2">
-            <div className="small text-muted">Final percentage</div>
+          <div className="col-6">
+            <div className="text-muted small">Current average so far</div>
             <div className="fs-4">
-              {totalWeight > 0 ? `${finalPercent.toFixed(2)}%` : "—"}
+              {Number.isNaN(currentPercent)
+                ? "—"
+                : `${currentPercent.toFixed(2)}%`}
             </div>
           </div>
-          <div className="col-md-6 mb-2">
-            <div className="small text-muted">Grade band</div>
-            <div className="fs-5">
+          <div className="col-6 text-end">
+            <div className="text-muted small">Projected final result</div>
+            <div className="fs-4">
+              {Number.isNaN(finalPercent)
+                ? "—"
+                : `${finalPercent.toFixed(2)}%`}
+            </div>
+            <div className="small mt-1">
               {finalBand ? (
                 <>
-                  {finalBand.id}{" "}
-                  <span className="text-muted small">
-                    – {finalBand.label}
-                  </span>
+                  <strong>{finalBand.id}</strong>{" "}
+                  <span className="text-muted">– {finalBand.label}</span>
                 </>
               ) : (
-                "—"
+                <span className="text-muted">No band yet</span>
               )}
             </div>
           </div>
@@ -81,6 +79,4 @@ const FinalGradeSummary: React.FC<Props> = ({
       </div>
     </div>
   );
-};
-
-export default FinalGradeSummary;
+}
