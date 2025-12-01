@@ -1,42 +1,104 @@
+/* Your global styles */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent: #2563eb;          /* main accent (soft blue) */
+  --accent-soft: #eff6ff;     /* very light blue background */
+  --border-soft: #e5e7eb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Light background, slight blue tint at top */
+.app-shell {
+  background: radial-gradient(circle at top, #ffffff 0, #f3f4f6 55%, #e5e7eb 100%);
+  min-height: 100vh;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+/* Main container */
+.app-container {
+  max-width: 1100px;
+  padding-bottom: 4rem; /* extra scroll room for dropdowns */
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Hero area */
+.app-hero-title {
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+  color: #0f172a;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.app-hero-subtitle {
+  max-width: 640px;
+  font-size: 0.95rem;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Cards: soft, clean */
+.card {
+  border-radius: 0.9rem;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.06);
+  overflow: visible; /* so dropdowns aren’t clipped */
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* "Important" cards (summary, required score) get a soft accent */
+.card-highlight {
+  border-color: #dbeafe;
+  background: linear-gradient(135deg, #ffffff, var(--accent-soft));
+}
+
+/* Card titles */
+.card-body h2.h5 {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Helper text */
+.text-muted.small,
+.small.text-muted {
+  font-size: 0.84rem;
+}
+
+/* Make key numbers slightly stronger */
+.fs-4,
+.fs-5 {
+  font-weight: 600;
+}
+
+/* Tighter table spacing */
+.table-sm > :not(caption) > * > * {
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+/* Inputs: slightly softer edges */
+.form-control,
+.form-select {
+  border-radius: 0.55rem;
+}
+
+/* Small labels */
+.form-label-sm,
+.form-label.form-label-sm {
+  font-size: 0.85rem;
+  margin-bottom: 0.15rem;
+}
+
+/* Scrollable grade bands list */
+.bands-list {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+  margin-top: 0.35rem;
+}
+
+/* Footer */
+footer {
+  opacity: 0.85;
+  font-size: 0.85rem;
+}
+
+/* Slight hero size bump on large screens */
+@media (min-width: 992px) {
+  .app-hero-title {
+    font-size: 2.1rem;
   }
 }
