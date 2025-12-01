@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://yourdomain.com"; // update when deployed
+  const base = "https://globalgradecalc.com ";
 
   return [
     { url: `${base}/`, lastModified: new Date() },

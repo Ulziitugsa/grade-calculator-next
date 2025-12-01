@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Free US letter grade calculator. Combine assignment and exam scores, see your final percentage and letter grade (A, B, C, D, F), and work out what you need on the final.",
   // When deployed, set your real canonical URL:
   // alternates: {
-  //   canonical: "https://yourdomain.com/us-letter-grade-calculator",
+  //   canonical: "https://globalgradecalc.com/us-letter-grade-calculator",
   // },
 };
 
@@ -22,7 +22,7 @@ const jsonLd = {
   inLanguage: "en-US",
   description:
     "Free US letter grade calculator for A, B, C, D and F. Calculates weighted final grade and required score on the final exam.",
-  url: "https://yourdomain.com/us-letter-grade-calculator", // update once deployed
+  url: "https://globalgradecalc.com/us-letter-grade-calculator", // update once deployed
   offers: {
     "@type": "Offer",
     price: "0",

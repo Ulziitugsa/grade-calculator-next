@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Free Australian university grade calculator using the HD, D, C, P1 and P2 bands. Combine assignment and exam marks, see your final grade, and work out what you need on your final.",
   // You can set canonical once you have a real domain:
   // alternates: {
-  //   canonical: "https://yourdomain.com/australia-university-grade-calculator",
+  //   canonical: "https://globalgradecalc.com/australia-university-grade-calculator",
   // },
 };
 
@@ -22,7 +22,7 @@ const jsonLd = {
   inLanguage: "en-AU",
   description:
     "Free Australian university grade calculator using HD, D, C, P1 and P2 bands. Calculates final mark, grade band, WAM and required exam score.",
-  url: "https://yourdomain.com/australia-university-grade-calculator", // update when deployed
+  url: "https://globalgradecalc.com/australia-university-grade-calculator", // update when deployed
   offers: {
     "@type": "Offer",
     price: "0",

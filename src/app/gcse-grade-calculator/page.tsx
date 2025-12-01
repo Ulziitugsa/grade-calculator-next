@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Free GCSE 9–1 grade calculator. Enter marks for papers and components, see your overall percentage and approximate GCSE grade from 9 to 1, and estimate what you need on remaining exams.",
   // When deployed, set your real canonical URL:
   // alternates: {
-  //   canonical: "https://yourdomain.com/gcse-grade-calculator",
+  //   canonical: "https://globalgradecalc.com/gcse-grade-calculator",
   // },
 };
 
@@ -22,7 +22,7 @@ const jsonLd = {
   inLanguage: "en-GB",
   description:
     "Free GCSE grade calculator for the 9–1 scale. Calculates a weighted overall percentage from different papers/components and shows the approximate grade band.",
-  url: "https://yourdomain.com/gcse-grade-calculator", // update when deployed
+  url: "https://globalgradecalc.com/gcse-grade-calculator", // update when deployed
   offers: {
     "@type": "Offer",
     price: "0",

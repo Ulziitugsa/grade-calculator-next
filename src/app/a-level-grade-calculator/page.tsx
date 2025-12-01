@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Free A-Level grade calculator. Enter your component or paper marks, see your overall percentage and approximate A-Level grade (A*, A, B, C, D, E), and estimate what you need on remaining exams.",
   // When deployed, set your real canonical URL:
   // alternates: {
-  //   canonical: "https://yourdomain.com/a-level-grade-calculator",
+  //   canonical: "https://globalgradecalc.com/a-level-grade-calculator",
   // },
 };
 
@@ -22,7 +22,7 @@ const jsonLd = {
   inLanguage: "en-GB",
   description:
     "Free A-Level grade calculator for A*, A, B, C, D and E. Calculates weighted overall mark from multiple papers/components and shows the approximate grade band.",
-  url: "https://yourdomain.com/a-level-grade-calculator", // update once deployed
+  url: "https://globalgradecalc.com/a-level-grade-calculator", // update once deployed
   offers: {
     "@type": "Offer",
     price: "0",

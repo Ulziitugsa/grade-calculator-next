@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Free UK honours degree calculator. Combine module marks to see your final percentage and classification (First, 2:1, 2:2, Third) and work out what you need in remaining modules.",
   // When deployed, set your real canonical URL:
   // alternates: {
-  //   canonical: "https://yourdomain.com/uk-honours-degree-calculator",
+  //   canonical: "https://globalgradecalc.com/uk-honours-degree-calculator",
   // },
 };
 
@@ -23,7 +23,7 @@ const jsonLd = {
   inLanguage: "en-GB",
   description:
     "Free UK honours degree calculator for First, 2:1, 2:2 and Third class classifications. Calculates weighted final degree percentage and what you need in remaining modules.",
-  url: "https://yourdomain.com/uk-honours-degree-calculator", // update when deployed
+  url: "https://globalgradecalc.com/uk-honours-degree-calculator", // update when deployed
   offers: {
     "@type": "Offer",
     price: "0",

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Free IB Diploma grade calculator. Enter your internal assessment and exam scores to estimate subject grades on the 7–1 scale and see what you need in remaining components.",
   // When deployed, set your real canonical URL:
   // alternates: {
-  //   canonical: "https://yourdomain.com/ib-grade-calculator",
+  //   canonical: "https://globalgradecalc.com/ib-grade-calculator",
   // },
 };
 
@@ -22,7 +22,7 @@ const jsonLd = {
   inLanguage: "en",
   description:
     "Free IB Diploma grade calculator for the 7–1 scale. Combines internal assessment and exam components into an estimated subject grade, and shows what you need in remaining papers.",
-  url: "https://yourdomain.com/ib-grade-calculator", // update when deployed
+  url: "https://globalgradecalc.com/ib-grade-calculator", // update when deployed
   offers: {
     "@type": "Offer",
     price: "0",

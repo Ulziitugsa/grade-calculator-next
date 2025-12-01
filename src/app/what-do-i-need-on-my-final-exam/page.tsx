@@ -32,7 +32,7 @@ const jsonLd = {
   inLanguage: "en",
   description:
     "Find out what score you need on your final exam to achieve your desired final grade. Supports multiple grading systems including A–F, HD/D/C/P, IB, A-Level, GCSE, and more.",
-  url: "https://yourdomain.com/what-do-i-need-on-my-final-exam", // update when deployed
+  url: "https://globalgradecalc.com/what-do-i-need-on-my-final-exam", // update when deployed
   offers: {
     "@type": "Offer",
     price: "0",
