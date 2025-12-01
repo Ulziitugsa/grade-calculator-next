@@ -71,7 +71,7 @@ export default function WhatDoINeedPage() {
         </header>
 
         {/* Calculator */}
-        <CalculatorRoot />
+        <CalculatorRoot initialSystem="au_uni" />
 
         {/* ---------------------------------------------------------------- */}
         {/* ---------------------- LONG SEO CONTENT ------------------------ */}
