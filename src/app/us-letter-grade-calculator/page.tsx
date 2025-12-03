@@ -59,7 +59,7 @@ export default function UsLetterGradePage() {
         </header>
 
         {/* Calculator pre-configured for US letter system */}
-        <CalculatorRoot initialSystem="us_letter" />
+        <CalculatorRoot systemId="us_letter" />
 
         {/* SEO-friendly explanatory content */}
         <section className="mt-4 mt-md-5">

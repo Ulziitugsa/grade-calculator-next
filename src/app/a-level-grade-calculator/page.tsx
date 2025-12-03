@@ -59,7 +59,7 @@ export default function ALevelGradeCalculatorPage() {
         </header>
 
         {/* Calculator pre-configured for A-Level bands */}
-        <CalculatorRoot initialSystem="uk_alevel" />
+        <CalculatorRoot systemId="uk_alevel" />
 
         {/* SEO content */}
         <section className="mt-4 mt-md-5">

@@ -59,7 +59,7 @@ export default function IbGradeCalculatorPage() {
         </header>
 
         {/* Calculator pre-configured for IB 7–1 */}
-        <CalculatorRoot initialSystem="ib_diploma" />
+        <CalculatorRoot systemId="ib_diploma" />
 
         {/* SEO content */}
         <section className="mt-4 mt-md-5">

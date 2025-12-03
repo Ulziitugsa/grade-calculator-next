@@ -61,7 +61,7 @@ export default function UkHonoursDegreePage() {
         </header>
 
         {/* Calculator pre-configured for UK honours */}
-        <CalculatorRoot initialSystem="uk_honours" />
+        <CalculatorRoot systemId="uk_honours" />
 
         {/* SEO content */}
         <section className="mt-4 mt-md-5">

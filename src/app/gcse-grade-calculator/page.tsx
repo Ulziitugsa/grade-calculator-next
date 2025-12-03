@@ -59,7 +59,7 @@ export default function GcseGradeCalculatorPage() {
         </header>
 
         {/* Calculator pre-configured for GCSE 9–1 */}
-        <CalculatorRoot initialSystem="uk_gcse" />
+        <CalculatorRoot systemId="uk_gcse" />
 
         {/* SEO content */}
         <section className="mt-4 mt-md-5">
