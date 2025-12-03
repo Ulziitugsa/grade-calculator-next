@@ -23,6 +23,14 @@ export default function FinalGradeSummary({
   return (
     <div className="card card-highlight mb-4">
       <div className="card-body">
+        <div className="small text-muted mb-2">
+          Total weight: <strong>{totalWeight.toFixed(1)}%</strong>
+          {totalWeight !== 100 && (
+            <span className="text-danger ms-1">
+              (check this adds up to 100%)
+            </span>
+          )}
+        </div>
         <h2 className="h5 mb-3">3. Current and final grade</h2>
 
         {!weightIs100 && (

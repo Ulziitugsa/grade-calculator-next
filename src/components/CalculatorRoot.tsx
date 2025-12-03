@@ -22,7 +22,10 @@ import {
 import { usePersistentState } from "../usePersistentState";
 
 type Props = {
-  initialSystem: GradeSystemId;
+  /** Fixed grading system for this page (route). Defaults to US letter. */
+  systemId?: GradeSystemId;
+  /** Whether to show the AU-only WAM & GPA panel. */
+  showWamPanel?: boolean;
 };
 
 const DEFAULT_ASSESSMENTS: Assessment[] = [
@@ -31,9 +34,11 @@ const DEFAULT_ASSESSMENTS: Assessment[] = [
   { id: "exam", name: "Final Exam", weight: 50, score: null },
 ];
 
-export default function CalculatorRoot({ initialSystem }: Props) {
-  // System is now fixed per page (no localStorage override)
-  const systemId: GradeSystemId = initialSystem;
+export default function CalculatorRoot({
+  systemId = "us_letter", // 👈 default for pages that don't specify
+  showWamPanel = false,
+}: Props) {
+  const effectiveSystemId = systemId;
 
   const [assessments, setAssessments] = usePersistentState<Assessment[]>(
     "ggc:assessments",
@@ -46,7 +51,10 @@ export default function CalculatorRoot({ initialSystem }: Props) {
   const [targetAssessmentId, setTargetAssessmentId] =
     usePersistentState<string>("ggc:targetAssessmentId", "exam");
 
-  const system = useMemo(() => getGradeSystem(systemId), [systemId]);
+  const system = useMemo(
+    () => getGradeSystem(effectiveSystemId),
+    [effectiveSystemId]
+  );
 
   const totalWeight = useMemo(
     () => getTotalWeight(assessments),
@@ -89,7 +97,8 @@ export default function CalculatorRoot({ initialSystem }: Props) {
   return (
     <div className="row g-4">
       <div className="col-lg-7">
-        <GradeSystemSelector selectedSystemId={systemId} />
+        {/* 👇 selector now only needs the current system id */}
+        <GradeSystemSelector selectedSystemId={effectiveSystemId} />
 
         <AssessmentTable
           assessments={assessments}
@@ -98,6 +107,9 @@ export default function CalculatorRoot({ initialSystem }: Props) {
       </div>
 
       <div className="col-lg-5">
+        <div className="small text-muted mb-2">
+          Grading system: <strong>{system.name}</strong>
+        </div>
         <FinalGradeSummary
           totalWeight={totalWeight}
           completedWeight={completedWeight}
@@ -115,7 +127,10 @@ export default function CalculatorRoot({ initialSystem }: Props) {
           requiredScore={requiredScore}
         />
 
-        {systemId === "au_uni" && <UniAuWamGpaCalculator />}
+        {/* 👇 WAM panel only on AU + when explicitly enabled */}
+        {showWamPanel && effectiveSystemId === "au_uni" && (
+          <UniAuWamGpaCalculator />
+        )}
       </div>
     </div>
   );

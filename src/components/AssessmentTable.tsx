@@ -67,7 +67,7 @@ export default function AssessmentTable({ assessments, onChange }: Props) {
   };
 
   return (
-    <div className="card  mb-4">
+    <div className="card card-highlight mb-4">
       <div className="card-body">
         <h2 className="h5 mb-3">2. Assessments & weights</h2>
         <p className="text-muted small">
@@ -76,7 +76,7 @@ export default function AssessmentTable({ assessments, onChange }: Props) {
         </p>
 
         <div className="table-responsive">
-          <table className="table table-sm align-middle">
+          <table className="table table-sm assessment-table align-middle">
             <thead>
               <tr>
                 <th style={{ width: "40%" }}>Assessment</th>
@@ -138,6 +138,12 @@ export default function AssessmentTable({ assessments, onChange }: Props) {
             </tbody>
           </table>
         </div>
+
+        <p className="small text-muted mb-0">
+          <strong>Weight</strong> is how much each item counts toward the final mark
+          (these usually add up to 100).{" "}
+          <strong>Score</strong> is the mark you received out of 100.
+        </p>
 
         <button
           type="button"

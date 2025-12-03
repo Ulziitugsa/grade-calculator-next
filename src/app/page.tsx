@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="app-shell">
       <div className="container app-container py-4 py-md-5">
-        <header className="app-hero mb-4 mb-md-5">
+        <header className="app-hero mb-3 mb-md-4">
           <h1 className="app-hero-title mb-2">Global Grade Calculator</h1>
           <p className="text-muted app-hero-subtitle mb-0">
             Calculate your final grade, overall percentage, exam score needed,
@@ -15,7 +15,14 @@ export default function HomePage() {
           </p>
         </header>
 
-        <CalculatorRoot initialSystem="au_uni" />
+        {/* 👇 NEW helper line */}
+        <p className="small text-muted mb-3">
+          <strong>How to use:</strong> 1) Choose your grading system · 2) Add
+          your assessments & marks · 3) See your grade and what you need on the
+          final.
+        </p>
+
+        <CalculatorRoot systemId="us_letter" />
         <OtherCalculators current="global" />
       </div>
     </div>

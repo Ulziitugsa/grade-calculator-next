@@ -44,29 +44,12 @@ body {
 body {
   font-family: var(--ggc-font-sans);
   color: var(--ggc-text-main);
-  background:
-    radial-gradient(circle at top, #ffffff 0, #f3f4f6 55%, #e5e7eb 100%);
+  background-color: #f3f4f6; /* neutral page background */
   -webkit-font-smoothing: antialiased;
 }
 
 .app-container {
   background-color: transparent;
-}
-
-/* Soft vignette around entire viewport */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      120% 100% at center,
-      rgba(0,0,0,0.06) 0%,
-      rgba(0,0,0,0.02) 55%,
-      rgba(0,0,0,0) 85%
-    );
-  z-index: -1;
 }
 
 /* Global link style */
@@ -106,39 +89,55 @@ a:focus {
 
 .app-hero {
   position: relative;
-  padding: 1rem 0 1.5rem;
+  padding: 1.5rem 1.5rem 1.75rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #eef2ff, #e0f2fe);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09);
+  overflow: hidden;
 }
 
+/* soft glow blob in the corner */
 .app-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
-  height: 105%;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.9),
+    rgba(129, 140, 248, 0.15),
+    transparent 70%
+  );
+  top: -80px;
+  right: -60px;
   pointer-events: none;
-  z-index: -1;
 }
 
 .app-hero-title {
+  position: relative;
   font-weight: 750;
-  font-size: 1.9rem;
+  font-size: 2rem;
   letter-spacing: -0.03em;
-  color: var(--ggc-text-main);
+  color: #0f172a;
+  margin-bottom: 0.4rem;
 }
 
 .app-hero-subtitle {
+  position: relative;
   max-width: 640px;
   font-size: 0.95rem;
-  color: var(--ggc-text-muted);
+  color: #4b5563;
 }
 
 @media (min-width: 992px) {
-  .app-hero-title {
-    font-size: 2.25rem;
+  .app-hero {
+    padding: 1.75rem 2rem 2rem;
   }
 
-  .app-hero {
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
+  .app-hero-title {
+    font-size: 2.3rem;
   }
 }
 
@@ -148,32 +147,47 @@ a:focus {
 
 .card {
   border-radius: var(--ggc-radius-card);
-  border: 1px solid var(--ggc-border);
+  border: 1px solid #e5e7eb;
   background-color: #ffffff;
-  box-shadow: var(--ggc-shadow-soft);
-  overflow: visible;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
   transition:
-    transform 0.15s ease-out,
-    box-shadow 0.15s ease-out,
-    border-color 0.15s ease-out;
+    transform 0.16s ease-out,
+    box-shadow 0.16s ease-out,
+    border-color 0.16s ease-out,
+    background-color 0.16s ease-out;
+}
+
+/* no weird accent line */
+.card::before {
+  content: none;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 55px rgba(15, 23, 42, 0.12);
-  border-color: var(--ggc-border-strong);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+  border-color: #cbd5f5;
 }
 
-/* Same base colour, just a slightly stronger border */
+/* Slightly tinted highlight card (e.g. summary) */
 .card-highlight {
-  background-color: #ffffff;
-  border-color: rgba(99, 102, 241, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(238, 242, 255, 0.9),
+    rgba(239, 246, 255, 0.95)
+  );
+  border-color: rgba(129, 140, 248, 0.6);
 }
 
 /* Card title refinement */
 .card-body h2.h5 {
   font-weight: 600;
   margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.card-body h3.h6 {
+  font-weight: 500;
 }
 
 /* ===========================
@@ -196,6 +210,11 @@ a:focus {
   font-weight: 600;
 }
 
+/* Make strong slightly lighter so it's not yelling */
+strong {
+  font-weight: 600;
+}
+
 /* ===========================
    Tables & Inputs
    =========================== */
@@ -210,12 +229,14 @@ a:focus {
   border-radius: 0.55rem;
   border-color: var(--ggc-border);
   font-size: 0.9rem;
+  background-color: #f9fafb;
 }
 
 .form-control:focus,
 .form-select:focus {
   border-color: var(--ggc-accent);
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+  background-color: #ffffff;
 }
 
 /* Small labels */
@@ -238,23 +259,30 @@ a:focus {
    =========================== */
 
 .btn-primary {
-  background-color: var(--ggc-accent);
-  border-color: var(--ggc-accent);
-  border-radius: 999px;
-  padding-inline: 1.2rem;
+  background: linear-gradient(
+    135deg,
+    var(--ggc-accent),
+    var(--ggc-accent-strong)
+  );
+  border-color: transparent;
+  border-radius: var(--ggc-radius-pill);
+  padding-inline: 1.3rem;
   font-weight: 500;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--ggc-accent-strong);
-  border-color: var(--ggc-accent-strong);
+  filter: brightness(1.03);
+  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.3);
 }
 
 .btn-outline-primary {
   color: var(--ggc-accent);
-  border-color: var(--ggc-accent);
-  border-radius: 999px;
+  border-color: rgba(99, 102, 241, 0.7);
+  border-radius: var(--ggc-radius-pill);
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-top: 20px;
 }
 
 .btn-outline-primary:hover,
@@ -266,7 +294,7 @@ a:focus {
 
 /* Danger small button refinement */
 .btn-outline-danger.btn-sm {
-  border-radius: 999px;
+  border-radius: var(--ggc-radius-pill);
 }
 
 /* ===========================
@@ -298,29 +326,13 @@ a:focus {
 }
 
 .required-score-box strong {
-  font-weight: 700;
+  font-weight: 600;
 }
-
 
 /* ===========================
-   Footer
+   WAM & GPA table layout
    =========================== */
 
-footer {
-  border-top: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(6px);
-}
-
-footer a {
-  color: var(--ggc-text-muted);
-  text-decoration: none;
-}
-
-footer a:hover {
-  color: var(--ggc-accent);
-  text-decoration: underline;
-}/* WAM & GPA table layout */
 .wam-table th,
 .wam-table td {
   vertical-align: middle;
@@ -353,10 +365,34 @@ footer a:hover {
   width: 100%;
 }
 
+/* ===========================
+   Footer
+   =========================== */
+
+footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+}
+
+footer a {
+  color: var(--ggc-text-muted);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--ggc-accent);
+  text-decoration: underline;
+}
 
 /* ===========================
    Layout Tweaks
    =========================== */
+
+/* Slightly reduce vertical gap between stacked cards */
+.card + .card {
+  margin-top: 0.9rem;
+}
 
 @media (min-width: 992px) {
   .app-container {
@@ -370,4 +406,70 @@ footer a:hover {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  .app-hero {
+    padding-inline: 1.1rem;
+  }
 }
+
+.assessment-table {
+  background-color: var(--ggc-bg-soft);
+  border-radius: 14px;
+}
+
+/* remove heavy table borders */
+.assessment-table td,
+.assessment-table th {
+  border: none !important;
+}
+
+/* keep headers subtle */
+.assessment-table thead th {
+  color: var(--ggc-text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* soften input look */
+.assessment-table input.form-control {
+  background-color: #fff;
+  border-color: rgba(148, 163, 184, 0.5);
+  font-size: 0.88rem;
+}
+
+/* round input corners slightly */
+.assessment-table input.form-control {
+  border-radius: 8px;
+}
+
+/* table rows keep spacing clean */
+.assessment-table tbody tr > td {
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+/* simple, quiet remove button */
+.assessment-table .btn-outline-danger.btn-sm {
+  font-size: 0.75rem;
+  border-color: rgba(239, 68, 68, 0.45);
+  color: rgba(185, 28, 28, 0.85);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.assessment-table .btn-outline-danger.btn-sm:hover {
+  background-color: rgba(254, 226, 226, 0.6);
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+/* make the actual cells use the same soft blue */
+.assessment-table thead th,
+.assessment-table tbody td {
+  background-color: var(--ggc-bg-soft);
+}
+
+/* optional: give rows a bit of separation */
+.assessment-table tbody tr + tr td {
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+}
+

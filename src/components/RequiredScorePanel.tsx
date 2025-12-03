@@ -136,9 +136,9 @@ export default function RequiredScorePanel({
               className="form-control form-control-sm"
               value={targetFinalPercent}
               onChange={(e) => {
-                const v = parseFloat(e.target.value);
-                const clamped = clamp(v, 0, 100);
-                onTargetFinalPercentChange(clamped);
+                const raw = Number(e.target.value);
+                const safe = Number.isNaN(raw) ? 0 : Math.max(0, Math.min(100, raw));
+                onTargetFinalPercentChange(safe);
               }}
             />
           </div>
@@ -161,8 +161,40 @@ export default function RequiredScorePanel({
         </div>
 
         <div className="required-score-box p-3">
-          <div className="small text-muted mb-1">Required score</div>
-          <div className="fs-6">{content}</div>
+          <div className="small text-muted mb-1">What do I need on this assessment?</div>
+          {requiredScore == null || Number.isNaN(requiredScore) ? (
+            <span className="required-score-placeholder">
+              Enter some marks and choose a target, and I&apos;ll tell you what you
+              need on this assessment.
+            </span>
+          ) : requiredScore > 100 ? (
+            <>
+              You would need more than{" "}
+              <strong>{requiredScore.toFixed(1)}%</strong> on this assessment, which
+              isn&apos;t possible.
+              <br />
+              <span className="small text-muted">
+                Try lowering your target or double-check that your weights and marks
+                are correct.
+              </span>
+            </>
+          ) : requiredScore <= 0 ? (
+            <>
+              You can score <strong>0%</strong> on this assessment and still reach your
+              target. 🎉
+            </>
+          ) : (
+            <>
+              You need at least <strong>{requiredScore.toFixed(1)}%</strong>{" "}
+              on{" "}
+              <strong>
+                {assessments.find((a) => a.id === targetAssessmentId)?.name ??
+                  "this assessment"}
+              </strong>{" "}
+              to finish on{" "}
+              <strong>{targetFinalPercent.toFixed(1)}%</strong>.
+            </>
+          )}
         </div>
       </div>
     </div>

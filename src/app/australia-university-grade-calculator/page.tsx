@@ -7,10 +7,6 @@ export const metadata: Metadata = {
   title: "Australia University Grade Calculator (HD / D / C / P1 / P2)",
   description:
     "Free Australian university grade calculator using the HD, D, C, P1 and P2 bands. Combine assignment and exam marks, see your final grade, and work out what you need on your final.",
-  // You can set canonical once you have a real domain:
-  // alternates: {
-  //   canonical: "https://globalgradecalc.com/australia-university-grade-calculator",
-  // },
 };
 
 const jsonLd = {
@@ -21,8 +17,8 @@ const jsonLd = {
   operatingSystem: "Any",
   inLanguage: "en-AU",
   description:
-    "Free Australian university grade calculator using HD, D, C, P1 and P2 bands. Calculates final mark, grade band, WAM and required exam score.",
-  url: "https://globalgradecalc.com/australia-university-grade-calculator", // update when deployed
+    "Free Australian university grade calculator using HD, D, C, P1 and P2 bands. Calculates final mark, grade band, and required exam score.",
+  url: "https://globalgradecalc.com/australia-university-grade-calculator",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -32,7 +28,6 @@ const jsonLd = {
     "Australian HD / D / C / P1 / P2 grade bands",
     "Weighted final grade calculator",
     "What do I need on my exam calculator",
-    "Approximate WAM and 1–7 GPA estimator",
   ],
 };
 
@@ -54,7 +49,7 @@ export default function AustraliaUniGradePage() {
         </header>
 
         {/* Calculator pre-configured for Australian universities */}
-        <CalculatorRoot initialSystem="au_uni" />
+        <CalculatorRoot systemId="au_uni" />
 
         {/* SEO content – helps Google understand + gives value to students */}
         <section className="mt-4 mt-md-5">
@@ -150,31 +145,16 @@ export default function AustraliaUniGradePage() {
           </ol>
 
           <h2 className="h4 mt-4 mb-3">
-            WAM and approximate GPA for Australian students
+            Want WAM & GPA as well?
           </h2>
           <p className="small text-muted">
-            When you use the Australian grading system, you&apos;ll also see an
-            additional card for <strong>WAM &amp; GPA</strong>. This lets you:
-          </p>
-          <ul className="small">
-            <li>
-              Enter each <strong>course</strong> with its credit points and
-              final mark.
-            </li>
-            <li>
-              See your <strong>Weighted Average Mark (WAM)</strong> across all
-              courses.
-            </li>
-            <li>
-              Estimate a <strong>1–7 style GPA</strong> based on the HD / D / C
-              / P / F bands.
-            </li>
-          </ul>
-          <p className="small text-muted">
-            Different universities may use slightly different WAM and GPA
-            formulas. This calculator is intended as a helpful estimate only –
-            always check your official results in your student portal for the
-            final word.
+            If you also need your <strong>WAM (Weighted Average Mark)</strong>{" "}
+            and an approximate <strong>1–7 GPA</strong> based on the HD / D / C
+            / P1 / P2 bands, try the{" "}
+            <a href="/australia-wam-gpa-calculator">
+              Australia WAM &amp; GPA Calculator
+            </a>
+            .
           </p>
 
           <h2 className="h4 mt-4 mb-3">

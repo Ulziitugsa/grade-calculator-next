@@ -4,11 +4,13 @@ import Link from "next/link";
 type CalculatorId =
   | "global"
   | "au_uni"
+  | "au_wam"
   | "us_letter"
   | "uk_honours"
   | "uk_alevel"
   | "uk_gcse"
-  | "ib_diploma";
+  | "ib_diploma"
+  | "gpa";
 
 const CALCULATORS: { id: CalculatorId; label: string; href: string }[] = [
   { id: "global", label: "Global Grade Calculator (all systems)", href: "/" },
@@ -16,6 +18,11 @@ const CALCULATORS: { id: CalculatorId; label: string; href: string }[] = [
     id: "au_uni",
     label: "Australia University Grade Calculator (HD / D / C / P1 / P2)",
     href: "/australia-university-grade-calculator",
+  },
+  {
+    id: "au_wam",
+    label: "Australia WAM & GPA Calculator",
+    href: "/australia-wam-gpa-calculator",
   },
   {
     id: "us_letter",
@@ -42,6 +49,11 @@ const CALCULATORS: { id: CalculatorId; label: string; href: string }[] = [
     label: "IB Diploma Grade Calculator (7–1)",
     href: "/ib-grade-calculator",
   },
+  {
+    id: "gpa",
+    label: "GPA Calculator (College / University)",
+    href: "/gpa-calculator",
+  },
 ];
 
 type Props = {
@@ -61,7 +73,10 @@ export default function OtherCalculators({ current }: Props) {
       <ul className="small mb-0">
         {others.map((calc) => (
           <li key={calc.id}>
-            <Link href={calc.href} className="link-secondary text-decoration-none">
+            <Link
+              href={calc.href}
+              className="link-secondary text-decoration-none"
+            >
               {calc.label}
             </Link>
           </li>
